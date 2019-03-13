@@ -1,7 +1,18 @@
 const express = require('express')
 const app = express()
+const path = require('path')
+const cors = require('cors')
+var bodyParser = require('body-parser')
 
-const messages = []
+app.use(bodyParser.json())
+
+let messages = []
+
+app.use(cors())
+
+app.get('/', (req,res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
 
 app.post('/newmessage', (req,res,next) => {
   const {message} = req.body;
@@ -18,7 +29,7 @@ app.get('/clear', (req,res,next) => {
   res.sendStatus(200)
 })
 
-const PORT = process.env.PORT || 3000
+const PORT =  3000
 app.listen(PORT, () => {
   console.log('listening!')
 })
